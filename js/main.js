@@ -131,12 +131,12 @@ window.onload = function() {
                     {'input':'text',
                     'id':'name'},
                 ]},
-                {'tabNavigation':'every',
-                'elements':[
-                    {'label':'Number'},
-                    {'input':'text',
-                    'id':'every'},
-                ]},
+                // {'tabNavigation':'every',
+                // 'elements':[
+                //     {'label':'Number'},
+                //     {'input':'text',
+                //     'id':'every'},
+                // ]},
                 // {'tabNavigation':'some',
                 // 'elements':[
                 //     {'label':'Value to check Name'},
@@ -251,9 +251,6 @@ window.onload = function() {
             this.workWithData.forEach(function(element) {
                 console.log(element);
             });
-        }
-        ArrayMethods.prototype['every'] = function() {
-
         }
         ArrayMethods.prototype.initNavigation = function() {
             var navigation = document.createElement( 'ul' ),
@@ -617,9 +614,6 @@ window.onload = function() {
                 }
                 else if ( method === 'forEach' ) {
                     that['forEach']();
-                }
-                else if ( method === 'every' ) {
-                    that['every']();
                 }
             });
         }
