@@ -86,30 +86,42 @@ button::-moz-focus-inner {
     max-width: 1150px;
     padding: 0 10px;
     width: 100%;
-    margin: 0 auto;
+	margin: 0 auto;
+	-webkit-box-flex: 1;
+    -ms-flex: 1 1;
+	flex: 1 1;
 }
 .navigation {
     display: -webkit-box;
 	display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-	    -ms-flex-align: center;
-	        align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
 	-ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        -webkit-box-pack: center;
-		    -ms-flex-pack: center;
-		        justify-content: center;
-    padding: 10px 0 0;
+	flex-wrap: wrap;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	padding: 10px 0 0;
+	margin: 0 0 -5px;
 }
+
 html {
     font-size: 62.5%;
 }
 body {
     font: 400 1.4rem/1.2 'Roboto', sans-serif;
     min-height: 100vh;
-	padding: 10rem 0;
+	padding: 6rem 0;
 	position: relative;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+    -ms-flex-direction: column;
+	flex-direction: column;
 }
 .popap-opened:before {
 	content: '';
@@ -153,8 +165,16 @@ body {
 	font-size: 25px;
 	margin: 0 0 10px;
 }
+.link-to {
+	font-size: 20px;
+    color: rgba(255,82,82,0.87);
+	text-decoration: none;
+}
 .info-holder {
 	text-align: center;
+}
+.bottom-holder {
+	padding: 3rem 0;
 }
 .navigation__item {
     cursor: pointer;

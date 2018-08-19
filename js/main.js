@@ -43,12 +43,12 @@ window.onload = function() {
                      {'textarea':'true',
                      'id': 'json_area'},
                  ]},
-                // {'tabNavigation':'join',
-                // 'elements':[
-                //     {'label':'delimiter'},
-                //     {'input':'text',
-                //     'id':'join_input'},
-                // ]},
+                {'tabNavigation':'join',
+                'elements':[
+                    {'label':'delimiter'},
+                    {'input':'text',
+                    'id':'join_input'},
+                ]},
                 {'tabNavigation':'push',
                 'elements':[
                     {'label':'Name'},
@@ -65,25 +65,25 @@ window.onload = function() {
                     'id':'age'},
                 ]},
                 {'tabNavigation':'pop'},
-                // {'tabNavigation':'shift'},
-                // {'tabNavigation':'unshift',
-                // 'elements':[
-                //     {'label':'Name'},
-                //     {'input':'text',
-                //     'id':'name'},
-                //     {'label':'Age'},
-                //     {'input':'text',
-                //     'id':'age'},
-                // ]},
-                // {'tabNavigation':'slice',
-                // 'elements':[
-                //     {'label':'Start Index'},
-                //     {'input':'number',
-                //     'id':'start_index'},
-                //     {'label':'Up to Index'},
-                //     {'input':'number',
-                //     'id':'up_to_index'},
-                // ]},
+                {'tabNavigation':'shift'},
+                {'tabNavigation':'unshift',
+                'elements':[
+                    {'label':'Name'},
+                    {'input':'text',
+                    'id':'name'},
+                    {'label':'Age'},
+                    {'input':'text',
+                    'id':'age'},
+                ]},
+                {'tabNavigation':'slice',
+                'elements':[
+                    {'label':'Start Index'},
+                    {'input':'number',
+                    'id':'start_index'},
+                    {'label':'Up to Index'},
+                    {'input':'number',
+                    'id':'up_to_index'},
+                ]},
                 {'tabNavigation':'splice',
                 'elements':[
                     {'label':'Index'},
@@ -99,7 +99,7 @@ window.onload = function() {
                     {'input':'text',
                     'id':'age'},
                 ]},
-                // {'tabNavigation':'reverse'},
+                {'tabNavigation':'reverse'},
                 {'tabNavigation':'sort',
                 'elements':[
                     {'label':'"Name" or "Age"'},
@@ -118,7 +118,7 @@ window.onload = function() {
                     {'input':'text',
                     'id':'age'},
                 ]},
-                // {'tabNavigation':'forEach'},
+                {'tabNavigation':'forEach'},
                 {'tabNavigation':'map',
                 'elements':[
                     {'label':'Age increase on'},
@@ -131,12 +131,12 @@ window.onload = function() {
                     {'input':'text',
                     'id':'name'},
                 ]},
-                // {'tabNavigation':'every',
-                // 'elements':[
-                //     {'label':'Number'},
-                //     {'input':'text',
-                //     'id':'every'},
-                // ]},
+                {'tabNavigation':'every',
+                'elements':[
+                    {'label':'Number'},
+                    {'input':'text',
+                    'id':'every'},
+                ]},
                 // {'tabNavigation':'some',
                 // 'elements':[
                 //     {'label':'Value to check Name'},
@@ -210,7 +210,7 @@ window.onload = function() {
             return (arrayValues.reduce(callback,0))/arrayValues.length;
         }
         ArrayMethods.prototype['splice'] = function( start, deleteCount, item ) {
-            var arrayCopy = this.workWithData;
+            var arrayCopy = [].concat(this.workWithData);
             if ( item ) {
                 arrayCopy.splice(start, deleteCount, item);
             }
@@ -218,6 +218,42 @@ window.onload = function() {
                 arrayCopy.splice(start, deleteCount);
             }
             return arrayCopy;
+        }
+        ArrayMethods.prototype['lastIndexOf'] = function( dataAray, item ) {
+            return dataAray.lastIndexOf( item );
+        }
+        ArrayMethods.prototype['join'] = function( dataAray, joinValue ) {
+            return dataAray.join( joinValue );
+        }
+        ArrayMethods.prototype['shift'] = function() {
+            if (this.resultData.length === 0 ) {
+                this.resultData = this.resultData.concat(this.workWithData);
+            }
+            this.resultData.shift();
+            return this.resultData;
+        }
+        ArrayMethods.prototype['unshift'] = function( nameVal, ageVal ) {
+            if (this.resultData.length === 0) {
+                this.resultData = this.resultData.concat(this.workWithData);
+            }
+            this.resultData.unshift( {'name': nameVal, 'age': ageVal} );
+            return this.resultData;
+        }
+        ArrayMethods.prototype['slice'] = function( start, upToIndex ) {
+            var arrayCopy = [].concat(this.workWithData);
+            return arrayCopy.slice(start, upToIndex);
+        }
+        ArrayMethods.prototype['reverse'] = function() {
+            var arrayCopy = [].concat(this.workWithData);
+            return arrayCopy.reverse();
+        }
+        ArrayMethods.prototype['forEach'] = function() {
+            this.workWithData.forEach(function(element) {
+                console.log(element);
+            });
+        }
+        ArrayMethods.prototype['every'] = function() {
+
         }
         ArrayMethods.prototype.initNavigation = function() {
             var navigation = document.createElement( 'ul' ),
@@ -434,7 +470,6 @@ window.onload = function() {
                     }
                     else {
                         that.clearResult();
-                        console.log(that['find']( parseInt(inputAgeNode.value)));
                         that.printTable('resultArrayContainer', that['find']( parseInt(inputAgeNode.value) ) );
                     }
                 }
@@ -482,13 +517,12 @@ window.onload = function() {
                 else if ( method === 'splice' ) {
                     var inputNameNode = document.getElementById( 'name' ),
                         inputAgeNode = document.getElementById( 'age' ),
-                        start = document.getElementById( 'index').value || 0,
-                        deleteCount = document.getElementById( 'count_to_remove').value || 0,
+                        start = document.getElementById( 'index' ).value || 0,
+                        deleteCount = document.getElementById( 'count_to_remove' ).value || 0,
                         regExpression = /^[a-zA-Z\s]*$/,
                         validName, validAge = '';
-                    console.log(deleteCount,start);
                     that.clearErrors();
-                    if ( !regExpression.test(inputNameNode.value)) {
+                    if ( !regExpression.test( inputNameNode.value )) {
                         var errorNode = that.initErrorNode();
                         errorNode.innerHTML = 'Invalid value';
                         inputNameNode.parentNode.insertBefore( errorNode, inputNameNode.nextElementSibling );
@@ -508,15 +542,84 @@ window.onload = function() {
                     }
                     if ( validAge && validName) {
                         that.clearResult();
-                        that.printTable('resultArrayContainer', that['splice']( start, deleteCount , {"name": validName, "age": validAge} ) );
+                        that.printTable( 'resultArrayContainer', that['splice']( start, deleteCount , {"name": validName, "age": validAge} ) );
                     }
                     else {
                         that.clearResult();
-                        that.printTable('resultArrayContainer', that['splice']( start, deleteCount ) );
+                        that.printTable( 'resultArrayContainer', that['splice']( start, deleteCount ) );
                     }
                 }
                 else if ( method === 'lastIndexOf' ) {
-                    
+                    var inputAgeNode = document.getElementById( 'age' );
+                    that.clearErrors();
+                    if ( !parseInt(inputAgeNode.value) || inputAgeNode.value.length > 3 || inputAgeNode.value.length === 0 ) {
+                        var errorNode = that.initErrorNode();
+                        errorNode.innerHTML = 'Invalid value';
+                        inputAgeNode.parentNode.insertBefore( errorNode, inputAgeNode.nextElementSibling );
+                    }
+                    else {
+                        var agesArr = that['map'](function( item ) {
+                            return item.age;}),
+                            tetxToOutput = 'Last index of: ' + inputAgeNode.value;
+                        that.clearResult();
+                        that.printSimpleData( [tetxToOutput , that['lastIndexOf']( agesArr, parseInt(inputAgeNode.value) )] );
+                    }  
+                }
+                else if ( method === 'join') {
+                    var delimiterValue = document.getElementById( 'join_input' ).value,
+                        tetxToOutput = 'Names joined by: ' + delimiterValue,
+                        namesArr = that['map'](function( item ) {
+                            return item.name;});
+                    that.clearResult();
+                    that.printSimpleData( [tetxToOutput , that['join']( namesArr, delimiterValue )] );
+                }
+                else if ( method === 'shift') {
+                    that.clearResult();
+                    that.printTable('resultArrayContainer', that['shift']() );
+                }
+                else if ( method === 'unshift' ) {
+                    var inputNameNode = document.getElementById( 'name' ),
+                        inputAgeNode = document.getElementById( 'age' ),
+                        regExpression = /^[a-zA-Z\s]*$/,
+                        validName, validAge = '';
+                    that.clearErrors();
+                    if ( !regExpression.test(inputNameNode.value) || inputNameNode.value.length === 0 ) {
+                        var errorNode = that.initErrorNode();
+                        errorNode.innerHTML = 'Invalid value';
+                        inputNameNode.parentNode.insertBefore( errorNode, inputNameNode.nextElementSibling );
+                    }
+                    else {
+                        validName = inputNameNode.value;
+                    }
+                    if ( !parseInt(inputAgeNode.value) || inputAgeNode.value.length > 3 || inputAgeNode.value.length === 0 ) {
+                        var errorNode = that.initErrorNode();
+                        errorNode.innerHTML = 'Invalid value';
+                        inputAgeNode.parentNode.insertBefore( errorNode, inputAgeNode.nextElementSibling );
+                    }
+                    else {
+                        validAge = parseInt(inputAgeNode.value);
+                    }
+                    if ( validAge && validName) {
+                        that.clearResult();
+                        that.printTable('resultArrayContainer', that['unshift']( validName, validAge ) );
+                    }
+                }
+                else if ( method === 'slice' ) {
+                    var start = document.getElementById( 'start_index' ).value || 0,
+                        upToIndex = document.getElementById( 'up_to_index' ).value || 0;
+                    that.clearErrors();
+                    that.clearResult();
+                    that.printTable( 'resultArrayContainer', that['slice']( start, upToIndex ) );
+                }
+                else if ( method === 'reverse' ) {
+                    that.clearResult();
+                    that.printTable('resultArrayContainer', that['reverse']() );
+                }
+                else if ( method === 'forEach' ) {
+                    that['forEach']();
+                }
+                else if ( method === 'every' ) {
+                    that['every']();
                 }
             });
         }
@@ -544,8 +647,24 @@ window.onload = function() {
                     'age': 25
                 },
                 {
-                    'name': 'Crimm',
+                    'name': 'Grimm',
                     'age': 34
+                },
+                {
+                    'name': 'Ivan',
+                    'age':34
+                },
+                {
+                    'name': 'Ivanna',
+                    'age':30
+                },
+                {
+                    'name': 'Maks',
+                    'age':34
+                },
+                {
+                    'name': 'MadMaks',
+                    'age':30
                 }
             ];
             this.workWithData = innerData || this.defaultData;
@@ -612,7 +731,7 @@ window.onload = function() {
             var users = '';
             try {
                 users = JSON.parse( value );
-            } catch (e) {
+            } catch ( e ) {
                 // console.log( 'Value is not JSON' );
                 // console.log( e.name );
                 // console.log( e.message );
