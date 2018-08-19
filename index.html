@@ -3,12 +3,27 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Index</title>
+        <title>Array Methods</title>
+        <link rel="shortcut icon" type="image/png" href="favicon.png"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=cyrillic" rel="stylesheet">
         <link rel="stylesheet" href="css/all.css">
         <script src="js/main.js"></script>
     </head>
-    <body>
+    <body class="popap-opened">
+        <div class="popap">
+            <form class="form" id="init_json" onsubmit="event.preventDefault();">
+                <div class="simple-text">
+                    Put your JSON string here or decline if want to use default JSON
+                </div>
+                <textarea name="" id="json-data" cols="3" rows="5"></textarea>
+                <div class="button-holder">
+                    <button type="submit" id="ok">Ok</button>   
+                </div>
+                <div class="button-holder">
+                    <button type="submit" id="cancel">Cancel</button>   
+                </div>
+            </form>
+        </div>
         <div class="container">
             <div class="info-holder" id="initialArrayConatiner">
             </div>    
