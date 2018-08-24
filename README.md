@@ -4,4 +4,4 @@ OOP implemented by prototypes, IIFE (Immediately-Invoked Function Expression), D
 simple form validation...
 
 To understand structure of JS code please open main.js in Sublime, VS code or your favourite editor :)
-and collapse all function. Use functions name to navigate. 
+and collapse all functions. Use functions name to navigate. 
